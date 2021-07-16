@@ -5,7 +5,7 @@ function PatientRepositorySearchByDocument() {
     const conditions = [];
     for (let d of documents) {
       conditions.push(
-        `AND({document} = '${d.document}', {documentType} = '${d.documentType}')`
+        `AND({document} = '${d.document}', {document_type} = '${d.documentType}')`
       );
     }
 
@@ -17,7 +17,7 @@ function PatientRepositorySearchByDocument() {
     return resp.data.records.map((d) => ({
       id: d.id,
       document: d.fields.document,
-      documentType: d.fields.documentType,
+      documentType: d.fields.document_type,
     }));
   };
 }

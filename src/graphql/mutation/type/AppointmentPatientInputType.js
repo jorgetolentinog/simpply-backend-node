@@ -11,10 +11,10 @@ const {
 const AppointmentPatientInputType = new GraphQLInputObjectType({
   name: "AppointmentPatientInput",
   fields: {
-    name: {
+    firstName: {
       type: new GraphQLNonNull(GraphQLString),
     },
-    lastname: {
+    lastName: {
       type: new GraphQLNonNull(GraphQLString),
     },
     birthdate: {

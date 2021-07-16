@@ -11,6 +11,8 @@ const {
   AppointmentPatientRepositoryCreateBulk,
 } = require("../../repository/appointment-patient/AppointmentPatientRepositoryCreateBulk");
 
+const { AppointmentSchema } = require("./schema");
+
 function AppointmentLogicCreate() {
   const appointmentRepositoryCreate = AppointmentRepositoryCreate();
   const appointmentPatientRepositoryCreateBulk =
@@ -19,6 +21,8 @@ function AppointmentLogicCreate() {
   const patientRepositoryCreateBulk = PatientRepositoryCreateBulk();
 
   return async (params) => {
+    params = await AppointmentSchema.validate(params);
+
     const patientsId = await getOrCreatePatients({
       patientRepositorySearchByDocument,
       patientRepositoryCreateBulk,
