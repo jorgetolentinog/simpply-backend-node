@@ -10,40 +10,36 @@ const container = awilix.createContainer({
   injectionMode: awilix.InjectionMode.PROXY,
 });
 
+// Appointment
 container.register({
-  // Appointment Service
-  // -------------------------------------------
   appointmentLogicCreate: awilix.asFunction(
     appointmentLogic.AppointmentLogicCreate
   ),
-
-  // Appointment Repository
-  // -------------------------------------------
   appointmentRepositoryCreate: awilix.asFunction(
     appointmentRepository.AppointmentRepositoryCreate
   ),
+});
 
-  // Appointment Patient Repository
-  // -------------------------------------------
+// Appointment Patient
+container.register({
   appointmentPatientRepositoryCreateBulk: awilix.asFunction(
     appointmentPatientRepository.AppointmentPatientRepositoryCreateBulk
   ),
+});
 
-  // Patient Repository
-  // -------------------------------------------
+// Patient
+container.register({
   patientRepositoryCreateBulk: awilix.asFunction(
     patientRepository.PatientRepositoryCreateBulk
   ),
   patientRepositorySearchByDocument: awilix.asFunction(
     patientRepository.PatientRepositorySearchByDocument
   ),
+});
 
-  // Service Logic
-  // -------------------------------------------
+// Service
+container.register({
   serviceLogicList: awilix.asFunction(serviceLogic.ServiceLogicList),
-
-  // Service Repository
-  // -------------------------------------------
   serviceRepositoryList: awilix.asFunction(
     serviceRepository.ServiceRepositoryList
   ),
