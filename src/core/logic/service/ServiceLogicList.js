@@ -9,7 +9,7 @@ function ServiceLogicList() {
     const result = await serviceRepositoryList();
     return result.map((o) => ({
       _id: o.id,
-      code: o.fields.PK,
+      pk: o.fields.pk,
       name: o.fields.name,
       description: o.fields.description,
       price: o.fields.price,

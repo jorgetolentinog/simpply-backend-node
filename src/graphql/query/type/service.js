@@ -11,7 +11,7 @@ const ServiceType = new GraphQLObjectType({
     _id: {
       type: GraphQLNonNull(GraphQLID),
     },
-    code: {
+    pk: {
       type: GraphQLNonNull(GraphQLID),
     },
     name: {
