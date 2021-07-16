@@ -1,10 +1,10 @@
 const awilix = require("awilix");
-const appointmentLogic = require("./core/logic/appointment");
-const appointmentRepository = require("./core/repository/appointment");
-const appointmentPatientRepository = require("./core/repository/appointment-patient");
-const patientRepository = require("./core/repository/patient");
-const serviceLogic = require("./core/logic/service");
-const serviceRepository = require("./core/repository/service");
+const appointmentLogic = require("./domain/logic/appointment");
+const appointmentRepository = require("./domain/repository/appointment");
+const appointmentPatientRepository = require("./domain/repository/appointment-patient");
+const patientRepository = require("./domain/repository/patient");
+const serviceLogic = require("./domain/logic/service");
+const serviceRepository = require("./domain/repository/service");
 
 const container = awilix.createContainer({
   injectionMode: awilix.InjectionMode.PROXY,

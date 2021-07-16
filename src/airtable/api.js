@@ -9,22 +9,4 @@ const airtableAPI = axios.create({
   },
 });
 
-function normalizeRecord(record) {
-  const element = {};
-  element["_id"] = record.id;
-  element["createdTime"] = record.createdTime;
-  for (let field of Object.keys(record.fields)) {
-    element[field] = record.fields[field];
-  }
-  return element;
-}
-
-function normalizeRecords(records) {
-  const result = [];
-  for (let record of records) {
-    result.push(normalizeRecord(record));
-  }
-  return result;
-}
-
-module.exports = { airtableAPI, normalizeRecords, normalizeRecord };
+module.exports = { airtableAPI };
