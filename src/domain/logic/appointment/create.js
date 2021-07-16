@@ -16,7 +16,7 @@ function AppointmentLogicCreate({
     });
 
     const appointment = await appointmentRepositoryCreate({});
-    appointmentPatientRepositoryCreateBulk(
+    await appointmentPatientRepositoryCreateBulk(
       patientsId.map((patientId) => ({
         pk: "3",
         appointmentId: appointment.id,
