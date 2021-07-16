@@ -1,9 +1,7 @@
 const { GraphQLObjectType } = require("graphql");
 const { AppointmentInputType } = require("./type/AppointmentInputType");
 const { AppointmentType } = require("../query/type/AppintmentType");
-const {
-  AppointmentLogicCreate,
-} = require("../../core/logic/appointment/AppointmentLogicCreate");
+const { app } = require("../../app");
 
 const MutationType = new GraphQLObjectType({
   name: "Mutation",
@@ -16,8 +14,7 @@ const MutationType = new GraphQLObjectType({
         },
       },
       resolve: async (_, args) => {
-        const create = AppointmentLogicCreate();
-        const newAppointment = await create(args.input);
+        const newAppointment = await app.appointment.create(args.input);
         return {
           id: newAppointment.id,
         };

@@ -1,25 +1,11 @@
-const {
-  AppointmentRepositoryCreate,
-} = require("../../repository/appointment/AppointmentRepositoryCreate");
-const {
-  PatientRepositorySearchByDocument,
-} = require("../../repository/patient/PatientRepositorySearchByDocument");
-const {
-  PatientRepositoryCreateBulk,
-} = require("../../repository/patient/PatientRepositoryCreateBulk");
-const {
-  AppointmentPatientRepositoryCreateBulk,
-} = require("../../repository/appointment-patient/AppointmentPatientRepositoryCreateBulk");
-
 const { AppointmentSchema } = require("./schema");
 
-function AppointmentLogicCreate() {
-  const appointmentRepositoryCreate = AppointmentRepositoryCreate();
-  const appointmentPatientRepositoryCreateBulk =
-    AppointmentPatientRepositoryCreateBulk();
-  const patientRepositorySearchByDocument = PatientRepositorySearchByDocument();
-  const patientRepositoryCreateBulk = PatientRepositoryCreateBulk();
-
+function AppointmentLogicCreate({
+  appointmentRepositoryCreate,
+  appointmentPatientRepositoryCreateBulk,
+  patientRepositorySearchByDocument,
+  patientRepositoryCreateBulk,
+}) {
   return async (params) => {
     params = await AppointmentSchema.validate(params);
 
