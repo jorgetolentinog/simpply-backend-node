@@ -15,12 +15,12 @@ const AppointmentInputType = new GraphQLInputObjectType({
     date: {
       type: new GraphQLNonNull(GraphQLString),
     },
-    // serviceId: {
-    //   type: new GraphQLNonNull(GraphQLString),
-    // },
-    // patients: {
-    //   type: new GraphQLNonNull(GraphQLList(AppointmentPatientInputType)),
-    // },
+    serviceId: {
+      type: new GraphQLNonNull(GraphQLString),
+    },
+    patients: {
+      type: new GraphQLNonNull(GraphQLList(AppointmentPatientInputType)),
+    },
   },
 });
 

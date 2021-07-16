@@ -1,5 +1,5 @@
 const { GraphQLObjectType, GraphQLList, GraphQLID } = require("graphql");
-const { ServiceType } = require("./type/service");
+const { ServiceType } = require("./type/ServiceType");
 const {
   ServiceLogicList,
 } = require("../../core/logic/service/ServiceLogicList");

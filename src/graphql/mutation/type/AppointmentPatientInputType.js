@@ -4,6 +4,10 @@ const {
   GraphQLString,
 } = require("graphql");
 
+const {
+  PatientDocumentTypeEnumType,
+} = require("./PatientDocumentTypeEnumType");
+
 const AppointmentPatientInputType = new GraphQLInputObjectType({
   name: "AppointmentPatientInput",
   fields: {
@@ -20,7 +24,7 @@ const AppointmentPatientInputType = new GraphQLInputObjectType({
       type: new GraphQLNonNull(GraphQLString),
     },
     documentType: {
-      type: new GraphQLNonNull(GraphQLString),
+      type: new GraphQLNonNull(PatientDocumentTypeEnumType),
     },
     email: {
       type: new GraphQLNonNull(GraphQLString),

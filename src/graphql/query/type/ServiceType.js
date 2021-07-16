@@ -8,7 +8,7 @@ const {
 const ServiceType = new GraphQLObjectType({
   name: "Service",
   fields: () => ({
-    _id: {
+    id: {
       type: GraphQLNonNull(GraphQLID),
     },
     pk: {

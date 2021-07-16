@@ -8,7 +8,7 @@ function ServiceLogicList() {
   return async () => {
     const result = await serviceRepositoryList();
     return result.map((o) => ({
-      _id: o.id,
+      id: o.id,
       pk: o.fields.pk,
       name: o.fields.name,
       description: o.fields.description,

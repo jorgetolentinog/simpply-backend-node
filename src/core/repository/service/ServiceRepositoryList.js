@@ -1,9 +1,8 @@
-const axios = require("axios");
-const { airtableAPI, normalizeRecords } = require("../../../airtable/api");
+const { airtableAPI } = require("../../../airtable/api");
 
 function ServiceRepositoryList() {
   return async () => {
-    const resp = await airtableAPI.get("service?maxRecords=3&view=Grid%20view");
+    const resp = await airtableAPI.get("service?view=Grid%20view");
     return resp.data.records;
   };
 }

@@ -8,7 +8,7 @@ const {
 const AppointmentType = new GraphQLObjectType({
   name: "Appointment",
   fields: () => ({
-    _id: {
+    id: {
       type: GraphQLNonNull(GraphQLID),
     },
     createdTime: {
