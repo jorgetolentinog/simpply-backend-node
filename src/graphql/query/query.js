@@ -1,8 +1,6 @@
-const { GraphQLObjectType, GraphQLList, GraphQLID } = require("graphql");
+const { GraphQLObjectType, GraphQLList } = require("graphql");
 const { ServiceType } = require("./type/ServiceType");
-const {
-  ServiceLogicList,
-} = require("../../core/logic/service/ServiceLogicList");
+const { app } = require("../../app");
 
 const QueryType = new GraphQLObjectType({
   name: "Query",
@@ -10,8 +8,7 @@ const QueryType = new GraphQLObjectType({
     services: {
       type: GraphQLList(ServiceType),
       resolve: async () => {
-        const serviceLogicList = ServiceLogicList();
-        return await serviceLogicList();
+        return await app.service.list();
       },
     },
   },

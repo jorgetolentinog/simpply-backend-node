@@ -3,8 +3,8 @@ const { AppointmentSchema } = require("./schema");
 function AppointmentLogicCreate({
   appointmentRepositoryCreate,
   appointmentPatientRepositoryCreateBulk,
-  patientRepositorySearchByDocument,
   patientRepositoryCreateBulk,
+  patientRepositorySearchByDocument,
 }) {
   return async (params) => {
     params = await AppointmentSchema.validate(params);

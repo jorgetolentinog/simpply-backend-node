@@ -3,6 +3,8 @@ const appointmentLogic = require("./core/logic/appointment");
 const appointmentRepository = require("./core/repository/appointment");
 const appointmentPatientRepository = require("./core/repository/appointment-patient");
 const patientRepository = require("./core/repository/patient");
+const serviceLogic = require("./core/logic/service");
+const serviceRepository = require("./core/repository/service");
 
 const container = awilix.createContainer({
   injectionMode: awilix.InjectionMode.PROXY,
@@ -34,6 +36,16 @@ container.register({
   ),
   patientRepositorySearchByDocument: awilix.asFunction(
     patientRepository.PatientRepositorySearchByDocument
+  ),
+
+  // Service Logic
+  // -------------------------------------------
+  serviceLogicList: awilix.asFunction(serviceLogic.ServiceLogicList),
+
+  // Service Repository
+  // -------------------------------------------
+  serviceRepositoryList: awilix.asFunction(
+    serviceRepository.ServiceRepositoryList
   ),
 });
 

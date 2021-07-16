@@ -1,10 +1,4 @@
-const {
-  ServiceRepositoryList,
-} = require("../../repository/service/ServiceRepositoryList");
-
-function ServiceLogicList() {
-  const serviceRepositoryList = ServiceRepositoryList();
-
+function ServiceLogicList({ serviceRepositoryList }) {
   return async () => {
     const result = await serviceRepositoryList();
     return result.map((o) => ({
