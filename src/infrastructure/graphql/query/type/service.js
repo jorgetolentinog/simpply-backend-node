@@ -5,7 +5,7 @@ const {
   GraphQLNonNull,
 } = require("graphql");
 
-const ServiceType = new GraphQLObjectType({
+const Service = new GraphQLObjectType({
   name: "Service",
   fields: () => ({
     id: {
@@ -26,4 +26,4 @@ const ServiceType = new GraphQLObjectType({
   }),
 });
 
-module.exports = { ServiceType };
+module.exports = { Service };

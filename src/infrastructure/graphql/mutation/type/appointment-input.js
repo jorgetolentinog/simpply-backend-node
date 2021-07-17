@@ -6,10 +6,10 @@ const {
 } = require("graphql");
 
 const {
-  AppointmentPatientInputType,
-} = require("./AppointmentPatientInputType");
+  AppointmentPatientInput,
+} = require("./appointment-patient-input");
 
-const AppointmentInputType = new GraphQLInputObjectType({
+const AppointmentInput = new GraphQLInputObjectType({
   name: "AppointmentInput",
   fields: {
     date: {
@@ -19,9 +19,9 @@ const AppointmentInputType = new GraphQLInputObjectType({
       type: new GraphQLNonNull(GraphQLString),
     },
     patients: {
-      type: new GraphQLNonNull(GraphQLList(AppointmentPatientInputType)),
+      type: new GraphQLNonNull(GraphQLList(AppointmentPatientInput)),
     },
   },
 });
 
-module.exports = { AppointmentInputType };
+module.exports = { AppointmentInput };

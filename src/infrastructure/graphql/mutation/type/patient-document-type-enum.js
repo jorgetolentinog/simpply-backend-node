@@ -1,6 +1,6 @@
 const { GraphQLEnumType } = require("graphql");
 
-const PatientDocumentTypeEnumType = new GraphQLEnumType({
+const PatientDocumentTypeEnum = new GraphQLEnumType({
   name: "PatientDocumentTypeEnum",
   values: {
     RUT: {
@@ -12,4 +12,4 @@ const PatientDocumentTypeEnumType = new GraphQLEnumType({
   },
 });
 
-module.exports = { PatientDocumentTypeEnumType };
+module.exports = { PatientDocumentTypeEnum };

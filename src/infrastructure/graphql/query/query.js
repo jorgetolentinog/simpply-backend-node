@@ -1,12 +1,12 @@
 const { GraphQLObjectType, GraphQLList } = require("graphql");
-const { ServiceType } = require("./type/ServiceType");
+const { Service } = require("./type/service");
 const { app } = require("../../../app");
 
-const QueryType = new GraphQLObjectType({
+const Query = new GraphQLObjectType({
   name: "Query",
   fields: {
     services: {
-      type: GraphQLList(ServiceType),
+      type: GraphQLList(Service),
       resolve: async () => {
         return await app.service.list();
       },
@@ -14,4 +14,4 @@ const QueryType = new GraphQLObjectType({
   },
 });
 
-module.exports = { QueryType };
+module.exports = { Query };

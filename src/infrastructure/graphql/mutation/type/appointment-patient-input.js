@@ -4,11 +4,9 @@ const {
   GraphQLString,
 } = require("graphql");
 
-const {
-  PatientDocumentTypeEnumType,
-} = require("./PatientDocumentTypeEnumType");
+const { PatientDocumentTypeEnum } = require("./patient-document-type-enum");
 
-const AppointmentPatientInputType = new GraphQLInputObjectType({
+const AppointmentPatientInput = new GraphQLInputObjectType({
   name: "AppointmentPatientInput",
   fields: {
     firstName: {
@@ -24,7 +22,7 @@ const AppointmentPatientInputType = new GraphQLInputObjectType({
       type: new GraphQLNonNull(GraphQLString),
     },
     documentType: {
-      type: new GraphQLNonNull(PatientDocumentTypeEnumType),
+      type: new GraphQLNonNull(PatientDocumentTypeEnum),
     },
     email: {
       type: new GraphQLNonNull(GraphQLString),
@@ -41,4 +39,4 @@ const AppointmentPatientInputType = new GraphQLInputObjectType({
   },
 });
 
-module.exports = { AppointmentPatientInputType };
+module.exports = { AppointmentPatientInput };

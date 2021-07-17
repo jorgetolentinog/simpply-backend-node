@@ -1,16 +1,16 @@
 const { GraphQLObjectType } = require("graphql");
-const { AppointmentInputType } = require("./type/AppointmentInputType");
-const { AppointmentType } = require("../query/type/AppintmentType");
+const { AppointmentInput } = require("./type/appointment-input");
+const { Appointment } = require("../query/type/appointment");
 const { app } = require("../../../app");
 
-const MutationType = new GraphQLObjectType({
+const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
     appointmentAdd: {
-      type: AppointmentType,
+      type: Appointment,
       args: {
         input: {
-          type: AppointmentInputType,
+          type: AppointmentInput,
         },
       },
       resolve: async (_, args) => {
@@ -23,4 +23,4 @@ const MutationType = new GraphQLObjectType({
   },
 });
 
-module.exports = { MutationType };
+module.exports = { Mutation };
