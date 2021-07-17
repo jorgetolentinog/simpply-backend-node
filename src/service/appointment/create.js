@@ -1,6 +1,6 @@
 const { AppointmentSchema } = require("./schema");
 
-function AppointmentLogicCreate({
+function AppointmentServiceCreate({
   appointmentRepositoryCreate,
   appointmentPatientRepositoryCreateBulk,
   patientRepositoryCreateBulk,
@@ -68,4 +68,4 @@ async function getOrCreatePatients({
   return patientsId;
 }
 
-module.exports = { AppointmentLogicCreate };
+module.exports = { AppointmentServiceCreate };

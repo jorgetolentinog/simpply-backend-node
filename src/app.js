@@ -2,10 +2,10 @@ const { container } = require("./container");
 
 const app = {
   appointment: {
-    create: container.resolve("appointmentLogicCreate"),
+    create: container.resolve("appointmentServiceCreate"),
   },
   service: {
-    list: container.resolve("serviceLogicList"),
+    list: container.resolve("serviceServiceList"),
   },
 };
 

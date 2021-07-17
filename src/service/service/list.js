@@ -1,4 +1,4 @@
-function ServiceLogicList({ serviceRepositoryList }) {
+function ServiceServiceList({ serviceRepositoryList }) {
   return async () => {
     const result = await serviceRepositoryList();
     return result.map((o) => ({
@@ -12,4 +12,4 @@ function ServiceLogicList({ serviceRepositoryList }) {
   };
 }
 
-module.exports = { ServiceLogicList };
+module.exports = { ServiceServiceList };

@@ -1,3 +1,3 @@
-const { AppointmentLogicCreate } = require("./create");
+const { AppointmentServiceCreate } = require("./create");
 
-module.exports = { AppointmentLogicCreate };
+module.exports = { AppointmentServiceCreate };

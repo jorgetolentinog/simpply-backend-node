@@ -1,3 +1,3 @@
-const { ServiceLogicList } = require("./list");
+const { ServiceServiceList } = require("./list");
 
-module.exports = { ServiceLogicList };
+module.exports = { ServiceServiceList };
