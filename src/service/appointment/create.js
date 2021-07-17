@@ -1,4 +1,4 @@
-const { AppointmentSchema } = require("./schema");
+const { AppointmentSchema } = require("../../entity/appointment");
 
 function AppointmentServiceCreate({
   appointmentRepositoryCreate,
