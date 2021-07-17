@@ -1,5 +1,9 @@
+const yup = require("yup");
+
 function PatientRepositorySearchByDocument({ airtableAPI }) {
   return async (documents) => {
+    await InputSchema.validate(documents);
+
     const conditions = [];
     for (let d of documents) {
       conditions.push(
@@ -19,5 +23,15 @@ function PatientRepositorySearchByDocument({ airtableAPI }) {
     }));
   };
 }
+
+const InputSchema = yup
+  .array()
+  .of(
+    yup.object().shape({
+      document: yup.string().required(),
+      documentType: yup.string().required(),
+    })
+  )
+  .min(1);
 
 module.exports = { PatientRepositorySearchByDocument };

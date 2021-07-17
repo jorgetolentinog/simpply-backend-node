@@ -1,6 +1,6 @@
 const yup = require("yup");
 
-const PatientRepositorySchema = yup.object().shape({
+const PatientSchema = yup.object().shape({
   fields: yup.object().shape({
     document_type: yup.string().required(),
     document: yup.string().required(),
@@ -14,9 +14,6 @@ const PatientRepositorySchema = yup.object().shape({
   }),
 });
 
-const PatientRepositorySchemaList = yup
-  .array()
-  .of(PatientRepositorySchema)
-  .max(10); // Limite de Airtable;
+const PatientListSchema = yup.array().of(PatientSchema);
 
-module.exports = { PatientRepositorySchema, PatientRepositorySchemaList };
+module.exports = { PatientSchema, PatientListSchema };

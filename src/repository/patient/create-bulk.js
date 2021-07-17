@@ -1,4 +1,4 @@
-const { PatientRepositorySchemaList } = require("./schema");
+const { PatientListSchema } = require("../../infrastructure/airtable/schema");
 
 function PatientRepositoryCreateBulk({ airtableAPI }) {
   return async (elements) => {
@@ -16,7 +16,7 @@ function PatientRepositoryCreateBulk({ airtableAPI }) {
       },
     }));
 
-    await PatientRepositorySchemaList.validate(records);
+    await PatientListSchema.validate(records);
 
     const resp = await airtableAPI.post("patient", {
       records: records,
