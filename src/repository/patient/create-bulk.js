@@ -17,7 +17,6 @@ function PatientRepositoryCreateBulk({ airtableAPI }) {
     }));
 
     await PatientListSchema.validate(records);
-
     const resp = await airtableAPI.post("patient", {
       records: records,
     });
