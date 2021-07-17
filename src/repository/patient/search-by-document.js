@@ -1,6 +1,4 @@
-const { airtableAPI } = require("../../../airtable/api");
-
-function PatientRepositorySearchByDocument() {
+function PatientRepositorySearchByDocument({ airtableAPI }) {
   return async (documents) => {
     const conditions = [];
     for (let d of documents) {

@@ -1,7 +1,6 @@
-const { airtableAPI } = require("../../../airtable/api");
 const { PatientRepositorySchemaList } = require("./schema");
 
-function PatientRepositoryCreateBulk() {
+function PatientRepositoryCreateBulk({ airtableAPI }) {
   return async (elements) => {
     const records = elements.map((o) => ({
       fields: {

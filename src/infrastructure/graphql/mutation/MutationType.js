@@ -1,7 +1,7 @@
 const { GraphQLObjectType } = require("graphql");
 const { AppointmentInputType } = require("./type/AppointmentInputType");
 const { AppointmentType } = require("../query/type/AppintmentType");
-const { app } = require("../../app");
+const { app } = require("../../../app");
 
 const MutationType = new GraphQLObjectType({
   name: "Mutation",

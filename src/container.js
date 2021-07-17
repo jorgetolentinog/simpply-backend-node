@@ -1,13 +1,19 @@
 const awilix = require("awilix");
-const appointmentLogic = require("./domain/logic/appointment");
-const appointmentRepository = require("./domain/repository/appointment");
-const appointmentPatientRepository = require("./domain/repository/appointment-patient");
-const patientRepository = require("./domain/repository/patient");
-const serviceLogic = require("./domain/logic/service");
-const serviceRepository = require("./domain/repository/service");
+const appointmentLogic = require("./service/appointment");
+const appointmentRepository = require("./repository/appointment");
+const appointmentPatientRepository = require("./repository/appointment-patient");
+const patientRepository = require("./repository/patient");
+const serviceLogic = require("./service/service");
+const serviceRepository = require("./repository/service");
+const { airtableAPI } = require("./infrastructure/airtable/api");
 
 const container = awilix.createContainer({
   injectionMode: awilix.InjectionMode.PROXY,
+});
+
+// Base
+container.register({
+  airtableAPI: awilix.asValue(airtableAPI),
 });
 
 // Appointment

@@ -1,6 +1,6 @@
 const { GraphQLObjectType, GraphQLList } = require("graphql");
 const { ServiceType } = require("./type/ServiceType");
-const { app } = require("../../app");
+const { app } = require("../../../app");
 
 const QueryType = new GraphQLObjectType({
   name: "Query",

@@ -1,6 +1,4 @@
-const { airtableAPI } = require("../../../airtable/api");
-
-function AppointmentPatientRepositoryCreateBulk() {
+function AppointmentPatientRepositoryCreateBulk({ airtableAPI }) {
   return async (records) => {
     const body = {
       records: records.map((o) => ({

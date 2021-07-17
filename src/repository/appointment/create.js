@@ -1,6 +1,4 @@
-const { airtableAPI } = require("../../../airtable/api");
-
-function AppointmentRepositoryCreate() {
+function AppointmentRepositoryCreate({ airtableAPI }) {
   return async () => {
     const resp = await airtableAPI.post("appointment", {
       records: [
