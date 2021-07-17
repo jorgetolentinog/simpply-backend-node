@@ -1,16 +1,15 @@
 const { AppointmentSchema } = require("../../infrastructure/airtable/schema");
 
 function AppointmentRepositoryCreate({ airtableAPI }) {
-  return async () => {
+  return async (params) => {
     const element = {
       fields: {
-        pk: "3",
-        service_id: ["rec3QhexlBAzfVnBl"],
-        date: "2021/01/01",
+        service_id: [params.serviceId],
+        date: params.date,
       },
     };
 
-    await AppointmentSchema.validate(element);
+    await AppointmentSchema.validate(element, { strict: true });
 
     const resp = await airtableAPI.post("appointment", {
       records: [element],

@@ -1,3 +1,4 @@
+const dayjs = require("dayjs");
 const { AppointmentSchema } = require("../../entity/appointment");
 
 function AppointmentServiceCreate({
@@ -15,10 +16,12 @@ function AppointmentServiceCreate({
       patients: params.patients,
     });
 
-    const appointment = await appointmentRepositoryCreate({});
+    const appointment = await appointmentRepositoryCreate({
+      date: dayjs(params.date).format("YYYY-MM-DD"),
+      serviceId: params.serviceId,
+    });
     await appointmentPatientRepositoryCreateBulk(
       patientsId.map((patientId) => ({
-        pk: "3",
         appointmentId: appointment.id,
         patientId: patientId,
       }))

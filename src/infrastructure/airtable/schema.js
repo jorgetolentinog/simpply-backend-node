@@ -2,7 +2,7 @@ const yup = require("yup");
 
 const AppointmentSchema = yup.object().shape({
   fields: yup.object().shape({
-    date: yup.date().required(),
+    date: yup.string().required(),
     service_id: yup.array().of(yup.string()).required(),
   }),
 });
@@ -22,7 +22,7 @@ const PatientSchema = yup.object().shape({
     last_name: yup.string().required(),
     email: yup.string().email().required(),
     phone: yup.string().required(),
-    birthdate: yup.date().required(),
+    birthdate: yup.string().required(),
     address: yup.string().required(),
     address_number: yup.string().required(),
   }),

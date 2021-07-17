@@ -11,7 +11,7 @@ function AppointmentPatientRepositoryCreateBulk({ airtableAPI }) {
       },
     }));
 
-    await AppointmentPatientListSchema.validate(records);
+    await AppointmentPatientListSchema.validate(records, { strict: true });
     const resp = await airtableAPI.post("appointment_patient", {
       records: records,
     });

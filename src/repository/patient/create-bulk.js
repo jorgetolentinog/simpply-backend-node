@@ -1,4 +1,5 @@
 const { PatientListSchema } = require("../../infrastructure/airtable/schema");
+const dayjs = require("dayjs");
 
 function PatientRepositoryCreateBulk({ airtableAPI }) {
   return async (elements) => {
@@ -10,13 +11,13 @@ function PatientRepositoryCreateBulk({ airtableAPI }) {
         last_name: o.lastName,
         email: o.email,
         phone: o.phone,
-        birthdate: o.birthdate,
+        birthdate: dayjs(o.birthdate).format("YYYY-MM-DD"),
         address: o.address,
         address_number: o.addressNumber,
       },
     }));
 
-    await PatientListSchema.validate(records);
+    await PatientListSchema.validate(records, { strict: true });
     const resp = await airtableAPI.post("patient", {
       records: records,
     });
