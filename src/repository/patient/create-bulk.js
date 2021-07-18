@@ -1,26 +1,42 @@
-const { PatientListSchema } = require("../../infrastructure/airtable/schema");
-const dayjs = require("dayjs");
+function PatientRepositoryCreateBulk({ airtable, yup }) {
+  const schema = yup
+    .array()
+    .of(
+      yup.object({
+        documentType: yup.string().required(),
+        document: yup.string().required(),
+        firstName: yup.string().required(),
+        lastName: yup.string().required(),
+        email: yup.string().required(),
+        phone: yup.string().required(),
+        birthdate: yup.string().required(),
+        address: yup.string().required(),
+        addressNumber: yup.string().required(),
+      })
+    )
+    .strict();
 
-function PatientRepositoryCreateBulk({ airtableAPI }) {
   return async (elements) => {
-    const records = elements.map((o) => ({
-      fields: {
-        document_type: o.documentType,
-        document: o.document,
-        first_name: o.firstName,
-        last_name: o.lastName,
-        email: o.email,
-        phone: o.phone,
-        birthdate: dayjs(o.birthdate).format("YYYY-MM-DD"),
-        address: o.address,
-        address_number: o.addressNumber,
-      },
-    }));
+    await schema.validate(elements);
 
-    await PatientListSchema.validate(records, { strict: true });
-    const resp = await airtableAPI.post("patient", {
-      records: records,
-    });
+    const body = {
+      records: elements.map((o) => ({
+        fields: {
+          document_type: o.documentType,
+          document: o.document,
+          first_name: o.firstName,
+          last_name: o.lastName,
+          email: o.email,
+          phone: o.phone,
+          birthdate: o.birthdate,
+          address: o.address,
+          address_number: o.addressNumber,
+        },
+      })),
+    };
+
+    await airtable.schema.patient.validate(body);
+    const resp = await airtable.http.post("patient", body);
 
     return resp.data.records.map((d) => ({
       id: d.id,

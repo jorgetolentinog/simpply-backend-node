@@ -7,7 +7,7 @@ const patientRepository = require("./repository/patient");
 const serviceRepository = require("./repository/service");
 const { airtableAPI } = require("./infrastructure/airtable/api");
 const { yup } = require("./infrastructure/validator/yup");
-const { Airtable } = require("./infrastructure/airtable/airtable");
+const { Airtable } = require("./infrastructure/airtable");
 
 const container = awilix.createContainer({
   injectionMode: awilix.InjectionMode.PROXY,
