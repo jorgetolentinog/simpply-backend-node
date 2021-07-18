@@ -1,8 +1,17 @@
-const yup = require("yup");
+function PatientRepositorySearchByDocument({ airtableAPI, yup }) {
+  const schema = yup
+    .array()
+    .of(
+      yup.object({
+        document: yup.string().required(),
+        documentType: yup.string().required(),
+      })
+    )
+    .min(1)
+    .strict();
 
-function PatientRepositorySearchByDocument({ airtableAPI }) {
   return async (documents) => {
-    await InputSchema.validate(documents);
+    await schema.validate(documents);
 
     const conditions = [];
     for (let d of documents) {
@@ -23,15 +32,5 @@ function PatientRepositorySearchByDocument({ airtableAPI }) {
     }));
   };
 }
-
-const InputSchema = yup
-  .array()
-  .of(
-    yup.object().shape({
-      document: yup.string().required(),
-      documentType: yup.string().required(),
-    })
-  )
-  .min(1);
 
 module.exports = { PatientRepositorySearchByDocument };
