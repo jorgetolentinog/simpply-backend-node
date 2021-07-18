@@ -63,7 +63,19 @@ async function getOrCreatePatients({
   }
 
   if (patientsToCreate.length > 0) {
-    const newPatients = await patientRepositoryCreateBulk(patientsToCreate);
+    const newPatients = await patientRepositoryCreateBulk(
+      patientsToCreate.map((o) => ({
+        documentType: o.documentType,
+        document: o.document,
+        firstName: o.firstName,
+        lastName: o.lastName,
+        email: o.email,
+        phone: o.phone,
+        birthdate: dayjs(o.birthdate).format("YYYY-MM-DD"),
+        address: o.address,
+        addressNumber: o.addressNumber,
+      }))
+    );
     for (let np of newPatients) {
       patientsId.push(np.id);
     }

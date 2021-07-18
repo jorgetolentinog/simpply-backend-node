@@ -1,4 +1,4 @@
-function PatientRepositorySearchByDocument({ airtableAPI, yup }) {
+function PatientRepositorySearchByDocument({ airtable, yup }) {
   const schema = yup
     .array()
     .of(
@@ -21,7 +21,7 @@ function PatientRepositorySearchByDocument({ airtableAPI, yup }) {
     }
 
     const formula = `OR(${conditions.join(",")})`;
-    const resp = await airtableAPI.get(
+    const resp = await airtable.http.get(
       `patient?view=Grid%20view&filterByFormula=${formula}`
     );
 

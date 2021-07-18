@@ -1,6 +1,6 @@
-function ServiceRepositoryList({ airtableAPI }) {
+function ServiceRepositoryList({ airtable }) {
   return async () => {
-    const resp = await airtableAPI.get("service?view=Grid%20view");
+    const resp = await airtable.http.get("service?view=Grid%20view");
     return resp.data.records.map((o) => ({
       id: o.id,
       pk: o.fields.pk,

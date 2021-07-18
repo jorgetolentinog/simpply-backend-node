@@ -1,4 +1,4 @@
-const { makeSchema } = require("./schema2");
+const { makeSchema } = require("./schema");
 const { http } = require("./http");
 
 class Airtable {

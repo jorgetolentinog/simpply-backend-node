@@ -1,40 +1,64 @@
-const yup = require("yup");
+function makeSchema({ yup }) {
+  const appointment = yup
+    .object({
+      records: yup
+        .array()
+        .of(
+          yup.object({
+            fields: yup.object({
+              date: yup.string().required(),
+              service_id: yup.array().of(yup.string()).required(),
+            }),
+          })
+        )
+        .required(),
+    })
+    .strict();
 
-const AppointmentSchema = yup.object().shape({
-  fields: yup.object().shape({
-    date: yup.string().required(),
-    service_id: yup.array().of(yup.string()).required(),
-  }),
-});
+  const appointmentPatient = yup
+    .object({
+      records: yup
+        .array()
+        .of(
+          yup.object({
+            fields: yup.object({
+              appointment_id: yup.array().of(yup.string()).required(),
+              patient_id: yup.array().of(yup.string()).required(),
+            }),
+          })
+        )
+        .required(),
+    })
+    .strict();
 
-const AppointmentPatientSchema = yup.object().shape({
-  fields: yup.object().shape({
-    appointment_id: yup.array().of(yup.string()).required(),
-    patient_id: yup.array().of(yup.string()).required(),
-  }),
-});
+  const patient = yup
+    .object({
+      records: yup
+        .array()
+        .of(
+          yup.object().shape({
+            fields: yup.object({
+              document_type: yup.string().required(),
+              document: yup.string().required(),
+              first_name: yup.string().required(),
+              last_name: yup.string().required(),
+              email: yup.string().email().required(),
+              phone: yup.string().required(),
+              birthdate: yup.string().required(),
+              address: yup.string().required(),
+              address_number: yup.string().required(),
+            }),
+          })
+        )
+        .required(),
+    })
+    .strict();
 
-const PatientSchema = yup.object().shape({
-  fields: yup.object().shape({
-    document_type: yup.string().required(),
-    document: yup.string().required(),
-    first_name: yup.string().required(),
-    last_name: yup.string().required(),
-    email: yup.string().email().required(),
-    phone: yup.string().required(),
-    birthdate: yup.string().required(),
-    address: yup.string().required(),
-    address_number: yup.string().required(),
-  }),
-});
+  return {
+    appointment,
+    appointmentPatient,
+    patient,
+  };
+}
 
-const PatientListSchema = yup.array().of(PatientSchema);
-const AppointmentPatientListSchema = yup.array().of(AppointmentPatientSchema);
-
-module.exports = {
-  AppointmentSchema,
-  AppointmentPatientSchema,
-  AppointmentPatientListSchema,
-  PatientSchema,
-  PatientListSchema,
-};
+module.exports = { makeSchema };

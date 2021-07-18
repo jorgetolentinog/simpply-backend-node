@@ -1,1 +1,1 @@
-DEBUG=app:* npx nodemon index.js
+DEBUG=app:*,-app:http npx nodemon index.js
