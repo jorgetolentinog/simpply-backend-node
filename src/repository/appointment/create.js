@@ -1,19 +1,27 @@
-const { AppointmentSchema } = require("../../infrastructure/airtable/schema");
+function AppointmentRepositoryCreate({ airtable, yup }) {
+  const schema = yup
+    .object({
+      serviceId: yup.string().required(),
+      date: yup.string().required(),
+    })
+    .strict();
 
-function AppointmentRepositoryCreate({ airtableAPI }) {
   return async (params) => {
-    const element = {
-      fields: {
-        service_id: [params.serviceId],
-        date: params.date,
-      },
+    await schema.validate(params);
+
+    const body = {
+      records: [
+        {
+          fields: {
+            service_id: [params.serviceId],
+            date: params.date,
+          },
+        },
+      ],
     };
 
-    await AppointmentSchema.validate(element, { strict: true });
-
-    const resp = await airtableAPI.post("appointment", {
-      records: [element],
-    });
+    await airtable.schema.appointment.validate(body);
+    const resp = await airtable.http.post("appointment", body);
 
     return {
       id: resp.data.records[0].id,
