@@ -1,11 +1,7 @@
 const yup = require("yup");
 
-yup.addMethod(yup.string, "length2", function (length, msg = "length2 error") {
-  return this.test({
-    name: "length",
-    message: msg,
-    test: (value) => value && value.toString().length === length,
-  });
+yup.addMethod(yup.string, "date", function () {
+  return this.matches(/^\d{4}-\d{2}-\d{2}$/, "date format invalid");
 });
 
 module.exports = { yup };

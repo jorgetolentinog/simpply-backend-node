@@ -1,14 +1,34 @@
-const dayjs = require("dayjs");
-const { AppointmentSchema } = require("../../entity/appointment");
-
 function AppointmentServiceCreate({
   appointmentRepositoryCreate,
   appointmentPatientRepositoryCreateBulk,
   patientRepositoryCreateBulk,
   patientRepositorySearchByDocument,
+  yup,
 }) {
+  const schema = yup.object({
+    date: yup.string().date().required(),
+    serviceId: yup.string().required(),
+    patients: yup
+      .array()
+      .of(
+        yup.object({
+          documentType: yup.string().required(),
+          document: yup.string().required(),
+          firstName: yup.string().required(),
+          lastName: yup.string().required(),
+          email: yup.string().email().required(),
+          phone: yup.string().required(),
+          birthdate: yup.string().required(),
+          address: yup.string().required(),
+          addressNumber: yup.string().required(),
+        })
+      )
+      .min(1)
+      .strict(),
+  });
+
   return async (params) => {
-    params = await AppointmentSchema.validate(params);
+    await schema.validate(params);
 
     const patientsId = await getOrCreatePatients({
       patientRepositorySearchByDocument,
@@ -17,9 +37,10 @@ function AppointmentServiceCreate({
     });
 
     const appointment = await appointmentRepositoryCreate({
-      date: dayjs(params.date).format("YYYY-MM-DD"),
+      date: params.date,
       serviceId: params.serviceId,
     });
+
     await appointmentPatientRepositoryCreateBulk(
       patientsId.map((patientId) => ({
         appointmentId: appointment.id,
@@ -63,19 +84,7 @@ async function getOrCreatePatients({
   }
 
   if (patientsToCreate.length > 0) {
-    const newPatients = await patientRepositoryCreateBulk(
-      patientsToCreate.map((o) => ({
-        documentType: o.documentType,
-        document: o.document,
-        firstName: o.firstName,
-        lastName: o.lastName,
-        email: o.email,
-        phone: o.phone,
-        birthdate: dayjs(o.birthdate).format("YYYY-MM-DD"),
-        address: o.address,
-        addressNumber: o.addressNumber,
-      }))
-    );
+    const newPatients = await patientRepositoryCreateBulk(patientsToCreate);
     for (let np of newPatients) {
       patientsId.push(np.id);
     }
