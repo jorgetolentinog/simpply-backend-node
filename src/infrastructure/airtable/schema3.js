@@ -12,7 +12,7 @@ function makeSchema3({ validator }) {
               service_id: {
                 type: "array",
                 items: {
-                  type: "number",
+                  type: "string",
                 },
               },
             },

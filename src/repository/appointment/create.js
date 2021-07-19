@@ -1,12 +1,12 @@
 function AppointmentRepositoryCreate({ airtable, validator }) {
   const check = validator.compile({
-    date: "number",
+    date: "string",
     serviceId: "string",
   });
 
   return async (params) => {
     const isValid = check(params);
-    if (!isValid !== true) {
+    if (isValid !== true) {
       throw new Error(isValid[0].message);
     }
 
