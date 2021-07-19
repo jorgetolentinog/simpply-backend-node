@@ -5,7 +5,7 @@ function AppointmentServiceCreate({
   validator,
 }) {
   const check = validator.compile({
-    date: "dateiso",
+    date: "isodate",
     serviceId: "string",
     patients: {
       type: "array",
@@ -17,7 +17,7 @@ function AppointmentServiceCreate({
         lastName: "string",
         email: "email",
         phone: "string",
-        birthdate: "dateiso",
+        birthdate: "isodate",
         address: "string",
         addressNumber: "string",
       },
