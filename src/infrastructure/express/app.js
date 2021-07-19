@@ -8,7 +8,7 @@ app.disable("x-powered-by");
 app.use(bodyParserJSON());
 
 app.use(
-  "/graphql",
+  "/api/graphql",
   graphqlHTTP({
     schema: Schema,
     graphiql: {
