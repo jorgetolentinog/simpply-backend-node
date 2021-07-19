@@ -16,7 +16,6 @@
     "debug": "^4.3.2",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
-    "graphql-playground-middleware-express": "^1.7.22",
     "yup": "^0.32.9"
   }
 }
