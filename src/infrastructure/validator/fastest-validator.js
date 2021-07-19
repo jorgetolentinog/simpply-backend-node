@@ -7,7 +7,7 @@ const validator = new Validator({
   },
 });
 
-validator.add("format", function ({ schema, messages }, path, context) {
+validator.add("dateiso", function ({ schema, messages }, path, context) {
   const src = [];
 
   src.push(`
@@ -17,19 +17,17 @@ validator.add("format", function ({ schema, messages }, path, context) {
     }
   `);
 
-  if (schema.date && schema.date === "YYYY-MM-DD") {
-    const pattern = /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/;
-    src.push(`
-      if (!${pattern.toString()}.test(value)) {
-				${this.makeError({
-          type: "format",
-          expected: '"' + schema.date + '"',
-          actual: "value",
-          messages,
-        })}
-      }
-    `);
-  }
+  const pattern = /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/;
+  src.push(`
+    if (!${pattern.toString()}.test(value)) {
+      ${this.makeError({
+        type: "format",
+        expected: '"' + schema.date + '"',
+        actual: "value",
+        messages,
+      })}
+    }
+  `);
 
   src.push(`return value;`);
 
