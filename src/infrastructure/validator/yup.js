@@ -1,7 +1,13 @@
 const yup = require("yup");
+const dayjs = require("dayjs");
 
-yup.addMethod(yup.string, "date", function () {
-  return this.matches(/^\d{4}-\d{2}-\d{2}$/, "date format invalid");
+yup.addMethod(yup.string, "date", function (format = "YYYY-MM-DD") {
+  return this.test({
+    message: (info) => {
+      return `${info.path} must match the following: ${format}`;
+    },
+    test: (value) => dayjs(value, format, true).isValid(),
+  });
 });
 
 module.exports = { yup };

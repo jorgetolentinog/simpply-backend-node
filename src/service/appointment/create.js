@@ -18,7 +18,7 @@ function AppointmentServiceCreate({
           lastName: yup.string().required(),
           email: yup.string().email().required(),
           phone: yup.string().required(),
-          birthdate: yup.string().required(),
+          birthdate: yup.string().date().required(),
           address: yup.string().required(),
           addressNumber: yup.string().required(),
         })
