@@ -20,8 +20,6 @@ container.register({
   airtable: awilix.asClass(Airtable),
 });
 
-container.register("aa.bb", awilix.asFunction(Airtable));
-
 // Appointment
 container.register({
   appointmentService: awilix.asClass(AppointmentService),
