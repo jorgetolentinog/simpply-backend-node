@@ -1,13 +1,14 @@
-function AppointmentRepositoryCreate({ airtable, yup }) {
-  const schema = yup
-    .object({
-      serviceId: yup.string().required(),
-      date: yup.string().required(),
-    })
-    .strict();
+function AppointmentRepositoryCreate({ airtable, validator }) {
+  const check = validator.compile({
+    date: "number",
+    serviceId: "string",
+  });
 
   return async (params) => {
-    await schema.validate(params);
+    const isValid = check(params);
+    if (!isValid !== true) {
+      throw new Error(isValid[0].message);
+    }
 
     const body = {
       records: [
@@ -20,9 +21,12 @@ function AppointmentRepositoryCreate({ airtable, yup }) {
       ],
     };
 
-    await airtable.schema.appointment.validate(body);
-    const resp = await airtable.http.post("appointment", body);
+    const isAppointmentValid = airtable.check.appointment(body);
+    if (isAppointmentValid !== true) {
+      throw new Error(isAppointmentValid[0].message);
+    }
 
+    const resp = await airtable.http.post("appointment", body);
     return {
       id: resp.data.records[0].id,
     };

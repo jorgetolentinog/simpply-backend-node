@@ -1,10 +1,12 @@
 const { makeSchema } = require("./schema");
+const { makeSchema3 } = require("./schema3");
 const { http } = require("./http");
 
 class Airtable {
   constructor(opts) {
     this.http = http;
     this.schema = makeSchema(opts);
+    this.check = makeSchema3(opts);
   }
 }
 
