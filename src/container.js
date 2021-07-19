@@ -7,9 +7,8 @@ const {
 } = require("./repository/appointment-patient");
 const { PatientRepository } = require("./repository/patient");
 const { ServiceRepository } = require("./repository/service");
-const { yup } = require("./infrastructure/validator/yup");
+const { validator } = require("./infrastructure/validator/fastest-validator");
 const { Airtable } = require("./infrastructure/airtable");
-const Validator = require("fastest-validator");
 
 const container = awilix.createContainer({
   injectionMode: awilix.InjectionMode.PROXY,
@@ -17,8 +16,7 @@ const container = awilix.createContainer({
 
 // Base
 container.register({
-  yup: awilix.asValue(yup),
-  validator: awilix.asValue(new Validator()),
+  validator: awilix.asValue(validator),
   airtable: awilix.asClass(Airtable),
 });
 

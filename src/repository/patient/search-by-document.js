@@ -1,17 +1,19 @@
-function PatientRepositorySearchByDocument({ airtable, yup }) {
-  const schema = yup
-    .array()
-    .of(
-      yup.object({
-        document: yup.string().required(),
-        documentType: yup.string().required(),
-      })
-    )
-    .min(1)
-    .strict();
+function PatientRepositorySearchByDocument({ airtable, validator }) {
+  const check = validator.compile({
+    $$root: true,
+    type: "array",
+    items: {
+      $$type: "object",
+      document: "string",
+      documentType: "string",
+    },
+  });
 
   return async (documents) => {
-    await schema.validate(documents);
+    const valid = check(documents);
+    if (valid !== true) {
+      throw new Error(valid[0].message);
+    }
 
     const conditions = [];
     for (let d of documents) {

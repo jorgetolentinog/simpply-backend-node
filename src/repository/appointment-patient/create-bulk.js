@@ -1,16 +1,19 @@
-function AppointmentPatientRepositoryCreateBulk({ airtable, yup }) {
-  const schema = yup
-    .array()
-    .of(
-      yup.object({
-        appointmentId: yup.string().required(),
-        patientId: yup.string().required(),
-      })
-    )
-    .strict();
+function AppointmentPatientRepositoryCreateBulk({ airtable, validator }) {
+  const check = validator.compile({
+    $$root: true,
+    type: "array",
+    items: {
+      $$type: "object",
+      appointmentId: "string",
+      patientId: "string",
+    },
+  });
 
   return async (elements) => {
-    await schema.validate(elements);
+    const valid = check(elements);
+    if (valid !== true) {
+      throw new Error(valid[0].message);
+    }
 
     const body = {
       records: elements.map((o) => ({
@@ -21,7 +24,13 @@ function AppointmentPatientRepositoryCreateBulk({ airtable, yup }) {
       })),
     };
 
-    await airtable.schema.appointmentPatient.validate(body);
+    const appointmentPatientValid = await airtable.check.appointmentPatient(
+      body
+    );
+    if (appointmentPatientValid !== true) {
+      throw new Error(appointmentPatientValid[0].message);
+    }
+
     const resp = await airtable.http.post("appointment_patient", body);
     return resp.data.records.map((o) => ({
       id: o.id,

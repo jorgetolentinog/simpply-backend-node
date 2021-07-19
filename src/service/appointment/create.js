@@ -2,32 +2,33 @@ function AppointmentServiceCreate({
   appointmentRepository,
   patientRepository,
   appointmentPatientRepository,
-  yup,
+  validator,
 }) {
-  const schema = yup.object({
-    date: yup.string().date().required(),
-    serviceId: yup.string().required(),
-    patients: yup
-      .array()
-      .of(
-        yup.object({
-          documentType: yup.string().required(),
-          document: yup.string().required(),
-          firstName: yup.string().required(),
-          lastName: yup.string().required(),
-          email: yup.string().email().required(),
-          phone: yup.string().required(),
-          birthdate: yup.string().date().required(),
-          address: yup.string().required(),
-          addressNumber: yup.string().required(),
-        })
-      )
-      .min(1)
-      .strict(),
+  const check = validator.compile({
+    date: "string",
+    serviceId: "string",
+    patients: {
+      type: "array",
+      items: {
+        $$type: "object",
+        documentType: "string",
+        document: "string",
+        firstName: "string",
+        lastName: "string",
+        email: "email",
+        phone: "string",
+        birthdate: "string",
+        address: "string",
+        addressNumber: "string",
+      },
+    },
   });
 
   return async (params) => {
-    await schema.validate(params);
+    const valid = check(params);
+    if (valid !== true) {
+      throw new Error(valid[0].message);
+    }
 
     const patientsId = await getOrCreatePatients({
       patientRepository,

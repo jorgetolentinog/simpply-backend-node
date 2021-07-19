@@ -1,23 +1,26 @@
-function PatientRepositoryCreateBulk({ airtable, yup }) {
-  const schema = yup
-    .array()
-    .of(
-      yup.object({
-        documentType: yup.string().required(),
-        document: yup.string().required(),
-        firstName: yup.string().required(),
-        lastName: yup.string().required(),
-        email: yup.string().required(),
-        phone: yup.string().required(),
-        birthdate: yup.string().required(),
-        address: yup.string().required(),
-        addressNumber: yup.string().required(),
-      })
-    )
-    .strict();
+function PatientRepositoryCreateBulk({ airtable, validator }) {
+  const check = validator.compile({
+    $$root: true,
+    type: "array",
+    items: {
+      $$type: "object",
+      documentType: "string",
+      document: "string",
+      firstName: "string",
+      lastName: "string",
+      email: "string",
+      phone: "string",
+      birthdate: "string",
+      address: "string",
+      addressNumber: "string",
+    },
+  });
 
   return async (elements) => {
-    await schema.validate(elements);
+    const valid = check(elements);
+    if (valid !== true) {
+      throw new Error(valid[0].message);
+    }
 
     const body = {
       records: elements.map((o) => ({
@@ -35,7 +38,11 @@ function PatientRepositoryCreateBulk({ airtable, yup }) {
       })),
     };
 
-    await airtable.schema.patient.validate(body);
+    const patientValid = airtable.check.patient(body);
+    if (patientValid !== true) {
+      throw new Error(patientValid[0].message);
+    }
+
     const resp = await airtable.http.post("patient", body);
 
     return resp.data.records.map((d) => ({

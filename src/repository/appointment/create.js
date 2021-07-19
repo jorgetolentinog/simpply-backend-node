@@ -5,9 +5,9 @@ function AppointmentRepositoryCreate({ airtable, validator }) {
   });
 
   return async (params) => {
-    const isValid = check(params);
-    if (isValid !== true) {
-      throw new Error(isValid[0].message);
+    const valid = check(params);
+    if (valid !== true) {
+      throw new Error(valid[0].message);
     }
 
     const body = {
@@ -21,9 +21,9 @@ function AppointmentRepositoryCreate({ airtable, validator }) {
       ],
     };
 
-    const isAppointmentValid = airtable.check.appointment(body);
-    if (isAppointmentValid !== true) {
-      throw new Error(isAppointmentValid[0].message);
+    const appointmentValid = airtable.check.appointment(body);
+    if (appointmentValid !== true) {
+      throw new Error(appointmentValid[0].message);
     }
 
     const resp = await airtable.http.post("appointment", body);
