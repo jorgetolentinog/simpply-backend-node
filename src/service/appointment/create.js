@@ -52,7 +52,7 @@ function AppointmentServiceCreate({
       };
     } catch (err) {
       console.log("AppointmentServiceCreate error", err);
-      throw new Error(`AppointmentServiceCreate: ${err.message}`);
+      throw new Error(`[AppointmentServiceCreate] ${err.message}`);
     }
   };
 }
