@@ -5,7 +5,7 @@ function AppointmentServiceCreate({
   yup,
 }) {
   const schema = yup.object({
-    date: yup.string().date().required(),
+    date: yup.string().isodate().required(),
     serviceId: yup.string().required(),
     patients: yup
       .array()
@@ -17,7 +17,7 @@ function AppointmentServiceCreate({
           lastName: yup.string().required(),
           email: yup.string().email().required(),
           phone: yup.string().required(),
-          birthdate: yup.string().date().required(),
+          birthdate: yup.string().isodate().required(),
           address: yup.string().required(),
           addressNumber: yup.string().required(),
         })
