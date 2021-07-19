@@ -1,6 +1,6 @@
-function ServiceServiceList({ serviceRepositoryList }) {
+function ServiceServiceList({ serviceRepository }) {
   return async () => {
-    const result = await serviceRepositoryList();
+    const result = await serviceRepository.list();
     return result;
   };
 }

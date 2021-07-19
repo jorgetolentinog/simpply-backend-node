@@ -1,10 +1,12 @@
 const awilix = require("awilix");
-const appointmentService = require("./service/appointment");
-const serviceService = require("./service/service");
-const appointmentRepository = require("./repository/appointment");
-const appointmentPatientRepository = require("./repository/appointment-patient");
-const patientRepository = require("./repository/patient");
-const serviceRepository = require("./repository/service");
+const { AppointmentService } = require("./service/appointment");
+const { ServiceService } = require("./service/service");
+const { AppointmentRepository } = require("./repository/appointment");
+const {
+  AppointmentPatientRepository,
+} = require("./repository/appointment-patient");
+const { PatientRepository } = require("./repository/patient");
+const { ServiceRepository } = require("./repository/service");
 const { yup } = require("./infrastructure/validator/yup");
 const { Airtable } = require("./infrastructure/airtable");
 
@@ -22,37 +24,24 @@ container.register("aa.bb", awilix.asFunction(Airtable));
 
 // Appointment
 container.register({
-  appointmentServiceCreate: awilix.asFunction(
-    appointmentService.AppointmentServiceCreate
-  ),
-  appointmentRepositoryCreate: awilix.asFunction(
-    appointmentRepository.AppointmentRepositoryCreate
-  ),
+  appointmentService: awilix.asClass(AppointmentService),
+  appointmentRepository: awilix.asClass(AppointmentRepository),
 });
 
 // Appointment Patient
 container.register({
-  appointmentPatientRepositoryCreateBulk: awilix.asFunction(
-    appointmentPatientRepository.AppointmentPatientRepositoryCreateBulk
-  ),
+  appointmentPatientRepository: awilix.asClass(AppointmentPatientRepository),
 });
 
 // Patient
 container.register({
-  patientRepositoryCreateBulk: awilix.asFunction(
-    patientRepository.PatientRepositoryCreateBulk
-  ),
-  patientRepositorySearchByDocument: awilix.asFunction(
-    patientRepository.PatientRepositorySearchByDocument
-  ),
+  patientRepository: awilix.asClass(PatientRepository),
 });
 
 // Service
 container.register({
-  serviceServiceList: awilix.asFunction(serviceService.ServiceServiceList),
-  serviceRepositoryList: awilix.asFunction(
-    serviceRepository.ServiceRepositoryList
-  ),
+  serviceService: awilix.asClass(ServiceService),
+  serviceRepository: awilix.asClass(ServiceRepository),
 });
 
 module.exports = { container };

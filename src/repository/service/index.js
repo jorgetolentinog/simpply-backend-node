@@ -1,3 +1,9 @@
 const { ServiceRepositoryList } = require("./list");
 
-module.exports = { ServiceRepositoryList };
+class ServiceRepository {
+  constructor(opts) {
+    this.list = ServiceRepositoryList(opts);
+  }
+}
+
+module.exports = { ServiceRepository };

@@ -1,8 +1,7 @@
 function AppointmentServiceCreate({
-  appointmentRepositoryCreate,
-  appointmentPatientRepositoryCreateBulk,
-  patientRepositoryCreateBulk,
-  patientRepositorySearchByDocument,
+  appointmentRepository,
+  patientRepository,
+  appointmentPatientRepository,
   yup,
 }) {
   const schema = yup.object({
@@ -31,17 +30,16 @@ function AppointmentServiceCreate({
     await schema.validate(params);
 
     const patientsId = await getOrCreatePatients({
-      patientRepositorySearchByDocument,
-      patientRepositoryCreateBulk,
+      patientRepository,
       patients: params.patients,
     });
 
-    const appointment = await appointmentRepositoryCreate({
+    const appointment = await appointmentRepository.create({
       date: params.date,
       serviceId: params.serviceId,
     });
 
-    await appointmentPatientRepositoryCreateBulk(
+    await appointmentPatientRepository.createBulk(
       patientsId.map((patientId) => ({
         appointmentId: appointment.id,
         patientId: patientId,
@@ -54,13 +52,9 @@ function AppointmentServiceCreate({
   };
 }
 
-async function getOrCreatePatients({
-  patientRepositorySearchByDocument,
-  patientRepositoryCreateBulk,
-  patients,
-}) {
+async function getOrCreatePatients({ patientRepository, patients }) {
   const patientsId = [];
-  const existingPatients = await patientRepositorySearchByDocument(
+  const existingPatients = await patientRepository.searchByDocument(
     patients.map((p) => ({
       document: p.document,
       documentType: p.documentType,
@@ -84,7 +78,7 @@ async function getOrCreatePatients({
   }
 
   if (patientsToCreate.length > 0) {
-    const newPatients = await patientRepositoryCreateBulk(patientsToCreate);
+    const newPatients = await patientRepository.createBulk(patientsToCreate);
     for (let np of newPatients) {
       patientsId.push(np.id);
     }

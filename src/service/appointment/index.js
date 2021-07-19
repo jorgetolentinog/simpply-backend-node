@@ -1,3 +1,9 @@
 const { AppointmentServiceCreate } = require("./create");
 
-module.exports = { AppointmentServiceCreate };
+class AppointmentService {
+  constructor(opts) {
+    this.create = AppointmentServiceCreate(opts);
+  }
+}
+
+module.exports = { AppointmentService };
