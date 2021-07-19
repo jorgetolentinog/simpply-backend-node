@@ -27,28 +27,33 @@ function AppointmentServiceCreate({
   });
 
   return async (params) => {
-    await schema.validate(params);
+    try {
+      await schema.validate(params);
 
-    const patientsId = await getOrCreatePatients({
-      patientRepository,
-      patients: params.patients,
-    });
+      const patientsId = await getOrCreatePatients({
+        patientRepository,
+        patients: params.patients,
+      });
 
-    const appointment = await appointmentRepository.create({
-      date: params.date,
-      serviceId: params.serviceId,
-    });
+      const appointment = await appointmentRepository.create({
+        date: params.date,
+        serviceId: params.serviceId,
+      });
 
-    await appointmentPatientRepository.createBulk(
-      patientsId.map((patientId) => ({
-        appointmentId: appointment.id,
-        patientId: patientId,
-      }))
-    );
+      await appointmentPatientRepository.createBulk(
+        patientsId.map((patientId) => ({
+          appointmentId: appointment.id,
+          patientId: patientId,
+        }))
+      );
 
-    return {
-      id: appointment.id,
-    };
+      return {
+        id: appointment.id,
+      };
+    } catch (err) {
+      console.log("AppointmentServiceCreate error", err);
+      throw new Error(`AppointmentServiceCreate: ${err.message}`);
+    }
   };
 }
 
