@@ -1,8 +1,8 @@
 import { injectable } from "tsyringe";
-import { AppointmentPatientRepositoryCreateBulk } from "@/repository/appointment-patient/create-bulk";
-import { AppointmentRepositoryCreate } from "@/repository/appointment/create";
-import { PatientRepositoryCreateBulk } from "@/repository/patient/create-bulk";
-import { PatientRepositorySearchByDocument } from "@/repository/patient/search-by-document";
+import { AppointmentPatientRepositoryCreateBulk } from "@/infrastructure/airtable/repository/appointment-patient/create-bulk";
+import { AppointmentRepositoryCreate } from "@/infrastructure/airtable/repository/appointment/create";
+import { PatientRepositoryCreateBulk } from "@/infrastructure/airtable/repository/patient/create-bulk";
+import { PatientRepositorySearchByDocument } from "@/infrastructure/airtable/repository/patient/search-by-document";
 import { z } from "zod";
 
 const schema = z.object({

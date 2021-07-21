@@ -1,13 +1,13 @@
 import { injectable } from "tsyringe";
-import { Airtable } from "@/infrastructure/airtable/airtable";
-import { Service, Record } from "@/infrastructure/airtable/schema/service";
+import { AirtableClient } from "../../client";
+import { Service, Record } from "../../schema/service";
 
 @injectable()
 class ServiceRepositoryList {
-  constructor(private airtable: Airtable) {}
+  constructor(private client: AirtableClient) {}
 
   async handle() {
-    const resp = await this.airtable.http.get<Service<Record>>(
+    const resp = await this.client.http.get<Service<Record>>(
       "service?view=Grid%20view"
     );
 

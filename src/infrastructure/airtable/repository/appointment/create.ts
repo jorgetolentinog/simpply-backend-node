@@ -1,10 +1,6 @@
 import { injectable } from "tsyringe";
-import { Airtable } from "@/infrastructure/airtable/airtable";
-import {
-  Appointment,
-  Record,
-  RecordDraft,
-} from "@/infrastructure/airtable/schema/appointment";
+import { AirtableClient } from "../../client";
+import { Appointment, Record, RecordDraft } from "../../schema/appointment";
 
 interface IHandleInput {
   serviceId: string;
@@ -13,7 +9,7 @@ interface IHandleInput {
 
 @injectable()
 class AppointmentRepositoryCreate {
-  constructor(private airtable: Airtable) {}
+  constructor(private client: AirtableClient) {}
 
   async handle(params: IHandleInput) {
     const body: Appointment<RecordDraft> = {
@@ -27,7 +23,7 @@ class AppointmentRepositoryCreate {
       ],
     };
 
-    const resp = await this.airtable.http.post<Appointment<Record>>(
+    const resp = await this.client.http.post<Appointment<Record>>(
       "appointment",
       body
     );

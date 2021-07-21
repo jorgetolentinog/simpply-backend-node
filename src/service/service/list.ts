@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { ServiceRepositoryList } from "@/repository/service/list";
+import { ServiceRepositoryList } from "@/infrastructure/airtable/repository/service/list";
 
 @injectable()
 class ServiceServiceList {

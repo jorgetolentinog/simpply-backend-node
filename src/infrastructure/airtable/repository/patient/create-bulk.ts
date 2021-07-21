@@ -1,10 +1,6 @@
 import { injectable } from "tsyringe";
-import { Airtable } from "@/infrastructure/airtable/airtable";
-import {
-  Patient,
-  Record,
-  RecordDraft,
-} from "@/infrastructure/airtable/schema/patient";
+import { AirtableClient } from "../../client";
+import { Patient, Record, RecordDraft } from "../../schema/patient";
 
 type HandleInput = {
   documentType: string;
@@ -20,7 +16,7 @@ type HandleInput = {
 
 @injectable()
 class PatientRepositoryCreateBulk {
-  constructor(private airtable: Airtable) {}
+  constructor(private client: AirtableClient) {}
 
   async handle(elements: HandleInput) {
     const body: Patient<RecordDraft> = {
@@ -39,10 +35,7 @@ class PatientRepositoryCreateBulk {
       })),
     };
 
-    const resp = await this.airtable.http.post<Patient<Record>>(
-      "patient",
-      body
-    );
+    const resp = await this.client.http.post<Patient<Record>>("patient", body);
 
     return resp.data.records.map((o) => ({
       id: o.id,

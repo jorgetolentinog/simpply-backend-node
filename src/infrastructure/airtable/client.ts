@@ -2,7 +2,7 @@ import { injectable } from "tsyringe";
 import axios, { AxiosInstance } from "axios";
 
 @injectable()
-class Airtable {
+class AirtableClient {
   http: AxiosInstance;
 
   constructor() {
@@ -21,4 +21,4 @@ class Airtable {
   }
 }
 
-export { Airtable };
+export { AirtableClient };

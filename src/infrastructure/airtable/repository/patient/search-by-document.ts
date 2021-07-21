@@ -1,6 +1,6 @@
 import { injectable } from "tsyringe";
-import { Airtable } from "@/infrastructure/airtable/airtable";
-import { Patient, Record } from "@/infrastructure/airtable/schema/patient";
+import { AirtableClient } from "../../client";
+import { Patient, Record } from "../../schema/patient";
 
 type HandleInput = {
   document: string;
@@ -9,7 +9,7 @@ type HandleInput = {
 
 @injectable()
 class PatientRepositorySearchByDocument {
-  constructor(private airtable: Airtable) {}
+  constructor(private client: AirtableClient) {}
 
   async handle(documents: HandleInput) {
     const conditions = [];
@@ -20,7 +20,7 @@ class PatientRepositorySearchByDocument {
     }
 
     const formula = `OR(${conditions.join(",")})`;
-    const resp = await this.airtable.http.get<Patient<Record>>(
+    const resp = await this.client.http.get<Patient<Record>>(
       `patient?view=Grid%20view&filterByFormula=${formula}`
     );
 
