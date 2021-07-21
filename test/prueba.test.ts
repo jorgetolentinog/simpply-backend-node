@@ -1,18 +1,18 @@
 import { container } from "tsyringe";
-import { Airtable } from "../src/infrastructure/airtable/airtable";
+import { AirtableClient } from "../src/infrastructure/airtable/client";
 import { ServiceServiceList } from "../src/service/service/list";
 import { mock } from "jest-mock-extended";
 
 describe("Ejemplo", () => {
   test("Inyección de dependencia", async () => {
     const scope = container.createChildContainer();
-    const AirtableMock = mock<Airtable>();
+    const AirtableClientMock = mock<AirtableClient>();
 
-    AirtableMock.http.get = jest
+    AirtableClientMock.http.get = jest
       .fn()
       .mockResolvedValue({ data: { records: [] } });
 
-    container.registerInstance(Airtable, AirtableMock);
+    scope.registerInstance(AirtableClient, AirtableClientMock);
     const service = scope.resolve(ServiceServiceList);
 
     console.log("service", await service.handle());
