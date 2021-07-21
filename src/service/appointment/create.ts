@@ -4,6 +4,7 @@ import { AppointmentRepositoryCreate } from "@/infrastructure/airtable/repositor
 import { PatientRepositoryCreateBulk } from "@/infrastructure/airtable/repository/patient/create-bulk";
 import { PatientRepositorySearchByDocument } from "@/infrastructure/airtable/repository/patient/search-by-document";
 import { z } from "zod";
+import { Logger } from "@/infrastructure/logger/logger";
 
 const schema = z.object({
   date: z.string(),
@@ -32,7 +33,8 @@ class AppointmentServiceCreate {
     private appointmentRepositoryCreate: AppointmentRepositoryCreate,
     private appointmentPatientRepositoryCreateBulk: AppointmentPatientRepositoryCreateBulk,
     private patientRepositorySearchByDocument: PatientRepositorySearchByDocument,
-    private patientRepositoryCreateBulk: PatientRepositoryCreateBulk
+    private patientRepositoryCreateBulk: PatientRepositoryCreateBulk,
+    private logger: Logger
   ) {}
 
   async handle(params: HandleInput) {
@@ -43,6 +45,7 @@ class AppointmentServiceCreate {
       date: params.date,
       serviceId: params.serviceId,
     });
+    this.logger.debug("Nueva cita", appointment);
 
     await this.appointmentPatientRepositoryCreateBulk.handle(
       patientsId.map((patientId) => ({
@@ -82,6 +85,7 @@ class AppointmentServiceCreate {
       }
     }
 
+    this.logger.debug("Pacientes a crear", patientsToCreate.length);
     if (patientsToCreate.length > 0) {
       const newPatients = await this.patientRepositoryCreateBulk.handle(
         patientsToCreate
