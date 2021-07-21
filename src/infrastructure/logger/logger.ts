@@ -10,7 +10,7 @@ class Logger {
 
   constructor() {
     const logger = new TSLogger({
-      displayFilePath: "hidden",
+      printLogMessageInNewLine: true,
     });
 
     this.debug = logger.debug.bind(logger);
