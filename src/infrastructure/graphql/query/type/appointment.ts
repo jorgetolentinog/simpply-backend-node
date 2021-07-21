@@ -1,9 +1,9 @@
-const {
+import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLID,
   GraphQLNonNull,
-} = require("graphql");
+} from "graphql";
 
 const Appointment = new GraphQLObjectType({
   name: "Appointment",
@@ -17,4 +17,4 @@ const Appointment = new GraphQLObjectType({
   }),
 });
 
-module.exports = { Appointment };
+export { Appointment };

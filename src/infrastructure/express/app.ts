@@ -1,7 +1,7 @@
-const express = require("express");
-const { graphqlHTTP } = require("express-graphql");
-const { json: bodyParserJSON } = require("body-parser");
-const { Schema } = require("../graphql/schema");
+import express from "express";
+import { graphqlHTTP } from "express-graphql";
+import { json as bodyParserJSON } from "body-parser";
+import { Schema } from "../graphql/schema";
 
 const app = express();
 app.disable("x-powered-by");

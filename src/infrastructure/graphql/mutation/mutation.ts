@@ -2,7 +2,7 @@ import { container } from "tsyringe";
 import { GraphQLObjectType } from "graphql";
 import { AppointmentInput } from "./type/appointment-input";
 import { Appointment } from "../query/type/appointment";
-import { AppointmentServiceCreate } from "../../../service/appointment/create";
+import { AppointmentServiceCreate } from "@/service/appointment/create";
 
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
@@ -22,4 +22,4 @@ const Mutation = new GraphQLObjectType({
   },
 });
 
-module.exports = { Mutation };
+export { Mutation };

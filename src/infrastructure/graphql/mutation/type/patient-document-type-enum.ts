@@ -1,4 +1,4 @@
-const { GraphQLEnumType } = require("graphql");
+import { GraphQLEnumType } from "graphql";
 
 const PatientDocumentTypeEnum = new GraphQLEnumType({
   name: "PatientDocumentTypeEnum",
@@ -12,4 +12,4 @@ const PatientDocumentTypeEnum = new GraphQLEnumType({
   },
 });
 
-module.exports = { PatientDocumentTypeEnum };
+export { PatientDocumentTypeEnum };

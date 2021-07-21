@@ -1,13 +1,10 @@
-const {
+import {
   GraphQLNonNull,
   GraphQLInputObjectType,
   GraphQLString,
   GraphQLList,
-} = require("graphql");
-
-const {
-  AppointmentPatientInput,
-} = require("./appointment-patient-input");
+} from "graphql";
+import { AppointmentPatientInput } from "./appointment-patient-input";
 
 const AppointmentInput = new GraphQLInputObjectType({
   name: "AppointmentInput",
@@ -24,4 +21,4 @@ const AppointmentInput = new GraphQLInputObjectType({
   },
 });
 
-module.exports = { AppointmentInput };
+export { AppointmentInput };

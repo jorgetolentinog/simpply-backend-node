@@ -1,8 +1,7 @@
 import { container } from "tsyringe";
 import { GraphQLObjectType, GraphQLList } from "graphql";
 import { Service } from "./type/service";
-import { ServiceServiceList } from "../../../service/service/list";
-// const { app } = require("../../../app");
+import { ServiceServiceList } from "@/service/service/list";
 
 const Query = new GraphQLObjectType({
   name: "Query",
@@ -17,4 +16,4 @@ const Query = new GraphQLObjectType({
   },
 });
 
-module.exports = { Query };
+export { Query };

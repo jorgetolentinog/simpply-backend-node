@@ -6,10 +6,10 @@ class Airtable {
   http: AxiosInstance;
 
   constructor() {
-    this.http = this.#httpInstanceCreate();
+    this.http = this.httpInstanceCreate();
   }
 
-  #httpInstanceCreate() {
+  private httpInstanceCreate() {
     return axios.create({
       baseURL: "https://api.airtable.com/v0/appgUUt9aJtuOxtnD/",
       timeout: 3000,

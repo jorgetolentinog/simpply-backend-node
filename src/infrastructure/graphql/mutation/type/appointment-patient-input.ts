@@ -1,10 +1,5 @@
-const {
-  GraphQLNonNull,
-  GraphQLInputObjectType,
-  GraphQLString,
-} = require("graphql");
-
-const { PatientDocumentTypeEnum } = require("./patient-document-type-enum");
+import { GraphQLNonNull, GraphQLInputObjectType, GraphQLString } from "graphql";
+import { PatientDocumentTypeEnum } from "./patient-document-type-enum";
 
 const AppointmentPatientInput = new GraphQLInputObjectType({
   name: "AppointmentPatientInput",
@@ -39,4 +34,4 @@ const AppointmentPatientInput = new GraphQLInputObjectType({
   },
 });
 
-module.exports = { AppointmentPatientInput };
+export { AppointmentPatientInput };
