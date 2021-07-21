@@ -17,4 +17,4 @@ app.use(
   })
 );
 
-module.exports = { app };
+export { app };
