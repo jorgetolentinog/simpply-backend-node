@@ -3,8 +3,8 @@ import { Airtable } from "../src/infrastructure/airtable/airtable";
 import { ServiceServiceList } from "../src/service/service/list";
 import { mock } from "jest-mock-extended";
 
-describe("Prueba", () => {
-  test("ok 2", async () => {
+describe("Ejemplo", () => {
+  test("Inyección de dependencia", async () => {
     const scope = container.createChildContainer();
     const AirtableMock = mock<Airtable>();
 
