@@ -7,7 +7,7 @@ class Logger {
   constructor() {}
 
   debug(...args: unknown[]) {
-    this.log(chalk.yellow.bold("DEBUG"), ...args);
+    this.log(chalk.green.bold("DEBUG"), ...args);
   }
 
   info(...args: unknown[]) {
@@ -21,9 +21,6 @@ class Logger {
   private log(level: string, ...args: unknown[]) {
     const caller = this.getCaller();
     const params: unknown[] = [`[${level}]`, chalk.gray(`[${this.getTime()}]`)];
-    if (caller && caller.filePath) {
-      params.push(chalk.gray(`[${caller.filePath}]`));
-    }
 
     if (caller && caller.at) {
       params.push(chalk.gray(`[${caller.at}]`));
