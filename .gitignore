@@ -3,3 +3,7 @@
 /build
 /.webpack
 /.serverless
+
+# env files
+.env*
+!.env.local

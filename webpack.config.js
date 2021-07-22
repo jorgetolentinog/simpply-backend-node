@@ -12,6 +12,7 @@ module.exports = {
   devtool: slsw.lib.webpack.isLocal
     ? "eval-cheap-module-source-map"
     : "source-map",
+  ignoreWarnings: [/critical dependency:/i],
   resolve: {
     extensions: [".ts", ".js", ".json"],
     alias: {
@@ -36,5 +37,16 @@ module.exports = {
       },
     ],
   },
-  stats: "errors-only",
+  stats: "minimal",
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all",
+        },
+      },
+    },
+  },
 };
