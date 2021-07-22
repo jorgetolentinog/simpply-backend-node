@@ -12,7 +12,6 @@ class ServiceServiceList {
   async handle() {
     const result = await this.serviceRepositoryList.handle();
     this.logger.debug("result.length", result.length);
-    this.logger.error("result.length", result.length);
     return result;
   }
 }
