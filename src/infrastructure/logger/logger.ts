@@ -1,20 +1,57 @@
-import { Logger as TSLogger, ILogObject as TSILogObject } from "tslog";
 import { injectable } from "tsyringe";
-
-type TSLoggerLevel = (...args: unknown[]) => TSILogObject;
+import chalk from "chalk";
 
 @injectable()
 class Logger {
-  debug: TSLoggerLevel;
-  error: TSLoggerLevel;
+  constructor() {}
 
-  constructor() {
-    const logger = new TSLogger({
-      printLogMessageInNewLine: true,
-    });
+  debug(...args: unknown[]) {
+    this.log(chalk.yellow.bold("DEBUG"), ...args);
+  }
 
-    this.debug = logger.debug.bind(logger);
-    this.error = logger.error.bind(logger);
+  error(...args: unknown[]) {
+    this.log(chalk.red.bold("ERROR"), ...args);
+  }
+
+  private log(level: string, ...args: unknown[]) {
+    const caller = this.getCaller();
+    if (!caller) {
+      console.log(...args);
+      return;
+    }
+
+    console.log(
+      `[${level}]`,
+      chalk.gray(`[${this.getTime()}]`),
+      chalk.gray(`[${caller.at}]`),
+      ...args
+    );
+  }
+
+  private getCaller() {
+    const level = 4; // Ajustar si se agregan más capas
+    const err = new Error();
+    if (!err.stack) return null;
+
+    const frames = err.stack.split("\n");
+    if (frames.length < level) return null;
+
+    const match = frames[level].match(/at (.+) \((.+)\)/);
+    if (!match) {
+      return null;
+    }
+
+    const at = match[1];
+    const file = match[2];
+    return { at, file };
+  }
+
+  private getTime() {
+    const d = new Date();
+    const h = String(d.getHours()).padStart(2, "0");
+    const m = String(d.getMinutes()).padStart(2, "0");
+    const s = String(d.getSeconds()).padStart(2, "0");
+    return `${h}:${m}:${s}`;
   }
 }
 

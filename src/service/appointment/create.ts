@@ -38,25 +38,30 @@ class AppointmentServiceCreate {
   ) {}
 
   async handle(params: HandleInput) {
-    schema.parse(params);
+    try {
+      schema.parse(params);
 
-    const patientsId = await this.getOrCreatePatients(params.patients);
-    const appointment = await this.appointmentRepositoryCreate.handle({
-      date: params.date,
-      serviceId: params.serviceId,
-    });
-    this.logger.debug("Nueva cita", appointment);
+      const patientsId = await this.getOrCreatePatients(params.patients);
+      const appointment = await this.appointmentRepositoryCreate.handle({
+        date: params.date,
+        serviceId: params.serviceId,
+      });
+      this.logger.debug("appointment", appointment);
 
-    await this.appointmentPatientRepositoryCreateBulk.handle(
-      patientsId.map((patientId) => ({
-        appointmentId: appointment.id,
-        patientId: patientId,
-      }))
-    );
+      await this.appointmentPatientRepositoryCreateBulk.handle(
+        patientsId.map((patientId) => ({
+          appointmentId: appointment.id,
+          patientId: patientId,
+        }))
+      );
 
-    return {
-      id: appointment.id,
-    };
+      return {
+        id: appointment.id,
+      };
+    } catch (error) {
+      this.logger.error(error);
+      throw error;
+    }
   }
 
   private async getOrCreatePatients(patients: HandleInputPatients) {
@@ -85,7 +90,7 @@ class AppointmentServiceCreate {
       }
     }
 
-    this.logger.debug("Pacientes a crear", patientsToCreate.length);
+    this.logger.debug("patientsToCreate.length", patientsToCreate.length);
     if (patientsToCreate.length > 0) {
       const newPatients = await this.patientRepositoryCreateBulk.handle(
         patientsToCreate
