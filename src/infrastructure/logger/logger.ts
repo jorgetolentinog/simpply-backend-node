@@ -6,14 +6,14 @@ class Logger {
   constructor() {}
 
   debug(...args: unknown[]) {
-    this.print(chalk.black.bgCyan(" DEBUG "), ...args);
+    this.console(chalk.black.bgGray(" DEBUG "), ...args);
   }
 
   error(...args: unknown[]) {
-    this.print(chalk.black.bgRed(" ERROR "), ...args);
+    this.console(chalk.white.bgRed(" ERROR "), ...args);
   }
 
-  private print(level: string, ...args: unknown[]) {
+  private console(level: string, ...args: unknown[]) {
     const method = this.getMethod();
 
     const params: unknown[] = [`${level}`, chalk.gray(`[${this.getTime()}]`)];
