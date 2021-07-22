@@ -1,5 +1,6 @@
 const path = require("path");
 const slsw = require("serverless-webpack");
+const TerserPlugin = require("terser-webpack-plugin");
 
 Object.keys(slsw.lib.entries).map((k) => {
   slsw.lib.entries[k] = ["./src/polyfill.ts", slsw.lib.entries[k]];
@@ -39,6 +40,14 @@ module.exports = {
   },
   stats: "minimal",
   optimization: {
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+        terserOptions: {
+          keep_classnames: true,
+        },
+      }),
+    ],
     splitChunks: {
       cacheGroups: {
         commons: {

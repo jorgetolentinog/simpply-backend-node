@@ -8,6 +8,7 @@
 - `install.sh`: Instala dependencias del proyecto
 - `server.sh`: Ejecutar servidor en modo desarollo
 - `test.sh`: Ejecuta pruebas
+- `deploy.sh`: Despliegue el servicio
 
 
 ## Estructura
