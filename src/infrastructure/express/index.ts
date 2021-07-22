@@ -1,9 +1,12 @@
 import express from "express";
+import { container } from "tsyringe";
 import { GraphQLError } from "graphql";
 import { graphqlHTTP } from "express-graphql";
 import { json as bodyParserJSON } from "body-parser";
-import { Schema } from "../graphql/schema";
 import { ZodError } from "zod";
+import { Config } from "@/config";
+import { Schema } from "../graphql/schema";
+import { Logger } from "../logger/logger";
 
 const app = express();
 app.disable("x-powered-by");
@@ -17,6 +20,7 @@ app.use(
       headerEditorEnabled: true,
     },
     customFormatErrorFn: (err: GraphQLError) => {
+      const logger = container.resolve(Logger);
       let detail = undefined;
       let reason = "error";
       let message = err.message;
@@ -29,6 +33,10 @@ app.use(
         message = `Validation Error: ${issue.message} at ${issueAt}`;
         stacktrace = undefined;
         detail = err.originalError.issues;
+      }
+
+      if (reason === "error") {
+        logger.tag("GraphQL").error(err.originalError);
       }
 
       return {

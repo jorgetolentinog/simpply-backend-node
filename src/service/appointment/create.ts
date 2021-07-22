@@ -38,30 +38,25 @@ class AppointmentServiceCreate {
   ) {}
 
   async handle(params: HandleInput) {
-    try {
-      schema.parse(params);
+    schema.parse(params);
 
-      const patientsId = await this.getOrCreatePatients(params.patients);
-      const appointment = await this.appointmentRepositoryCreate.handle({
-        date: params.date,
-        serviceId: params.serviceId,
-      });
-      this.logger.debug("appointment", appointment);
+    const patientsId = await this.getOrCreatePatients(params.patients);
+    const appointment = await this.appointmentRepositoryCreate.handle({
+      date: params.date,
+      serviceId: params.serviceId,
+    });
+    this.logger.debug("appointment", appointment);
 
-      await this.appointmentPatientRepositoryCreateBulk.handle(
-        patientsId.map((patientId) => ({
-          appointmentId: appointment.id,
-          patientId: patientId,
-        }))
-      );
+    await this.appointmentPatientRepositoryCreateBulk.handle(
+      patientsId.map((patientId) => ({
+        appointmentId: appointment.id,
+        patientId: patientId,
+      }))
+    );
 
-      return {
-        id: appointment.id,
-      };
-    } catch (error) {
-      this.logger.error(error);
-      throw error;
-    }
+    return {
+      id: appointment.id,
+    };
   }
 
   private async getOrCreatePatients(patients: HandleInputPatients) {
