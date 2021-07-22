@@ -1,3 +1,4 @@
+app: simpply
 service: simpply-back-node
 frameworkVersion: "2"
 useDotenv: true
