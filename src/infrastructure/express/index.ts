@@ -4,7 +4,6 @@ import { GraphQLError } from "graphql";
 import { graphqlHTTP } from "express-graphql";
 import { json as bodyParserJSON } from "body-parser";
 import { ZodError } from "zod";
-import { Config } from "@/config";
 import { Schema } from "../graphql/schema";
 import { Logger } from "../logger/logger";
 
