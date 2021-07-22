@@ -1,6 +1,5 @@
 import { injectable } from "tsyringe";
 import chalk from "chalk";
-import { sep as pathSeparator } from "path";
 
 @injectable()
 class Logger {
@@ -11,21 +10,21 @@ class Logger {
   }
 
   error(...args: unknown[]) {
-    this.print(chalk.red.bold("ERROR"), ...args);
+    this.print(chalk.black.bgRed(" ERROR "), ...args);
   }
 
   private print(level: string, ...args: unknown[]) {
-    const caller = this.getCaller();
-    const params: unknown[] = [`${level}`, chalk.gray(`[${this.getTime()}]`)];
+    const method = this.getMethod();
 
-    if (caller && caller.at) {
-      params.push(chalk.gray(`[${caller.at}]`));
+    const params: unknown[] = [`${level}`, chalk.gray(`[${this.getTime()}]`)];
+    if (method && method) {
+      params.push(chalk.gray(`[${method}]`));
     }
 
     console.log(...params.concat(args));
   }
 
-  private getCaller() {
+  private getMethod() {
     const stackIndex = 4; // Ajustar si se agregan más capas
     const err = new Error();
     if (!err.stack) return null;
@@ -33,30 +32,11 @@ class Logger {
     const frames = err.stack.split("\n");
     if (frames.length < stackIndex) return null;
 
-    const match = frames[stackIndex].match(/at (.+) \((.+)\)/);
+    const match = frames[stackIndex].match(/at (.+) \(.+\)/);
     if (!match) return null;
 
-    const at = match[1];
-    const file = this.cleanFile(match[2]);
-
-    if (at.indexOf("<anonymous>") >= 0) {
-      return { at: null, file };
-    }
-
-    return { at, file };
-  }
-
-  private cleanFile(fileName: string): string {
-    const cwdArray: string[] = process.cwd().split(pathSeparator);
-    const filePath = Object.entries(fileName.split(pathSeparator))
-      .reduce((cleanFileName: string, fileNamePart, index) => {
-        if (fileNamePart[1] !== cwdArray[index]) {
-          cleanFileName += pathSeparator + fileNamePart[1];
-        }
-        return cleanFileName;
-      }, "")
-      .substring(1);
-    return filePath.split(":").slice(0, -1).join(":");
+    const method = match[1];
+    return method;
   }
 
   private getTime() {
