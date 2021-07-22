@@ -18,12 +18,14 @@ app.use(
     },
     customFormatErrorFn: (err: GraphQLError) => {
       let detail = undefined;
+      let reason = "error";
       let message = err.message;
       let stacktrace: string | undefined = err.stack;
 
       if (err.originalError instanceof ZodError) {
         const issue = err.originalError.issues[0];
         const issueAt = issue.path.join(".");
+        reason = "validation";
         message = `Validation Error: ${issue.message} at ${issueAt}`;
         stacktrace = undefined;
         detail = err.originalError.issues;
@@ -32,6 +34,7 @@ app.use(
       return {
         message,
         extensions: {
+          reason,
           detail,
           stacktrace,
         },
