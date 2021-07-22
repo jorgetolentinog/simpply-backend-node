@@ -44,7 +44,7 @@ class Logger {
     if (!match) return null;
 
     const at = match[1];
-    const filePath = this.cleanUpFilePath(match[2]);
+    const filePath = this.cleanFilePath(match[2]);
 
     if (at.indexOf("<anonymous>") >= 0) {
       return { at: null, filePath };
@@ -53,15 +53,7 @@ class Logger {
     return { at, filePath };
   }
 
-  private getTime() {
-    const d = new Date();
-    const h = String(d.getHours()).padStart(2, "0");
-    const m = String(d.getMinutes()).padStart(2, "0");
-    const s = String(d.getSeconds()).padStart(2, "0");
-    return `${h}:${m}:${s}`;
-  }
-
-  private cleanUpFilePath(fileName: string): string {
+  private cleanFilePath(fileName: string): string {
     const cwdArray: string[] = process.cwd().split(pathSeparator);
     const filePath = Object.entries(fileName.split(pathSeparator))
       .reduce((cleanFileName: string, fileNamePart, index) => {
@@ -72,6 +64,14 @@ class Logger {
       }, "")
       .substring(1);
     return filePath.split(":").slice(0, -1).join(":");
+  }
+
+  private getTime() {
+    const d = new Date();
+    const h = String(d.getHours()).padStart(2, "0");
+    const m = String(d.getMinutes()).padStart(2, "0");
+    const s = String(d.getSeconds()).padStart(2, "0");
+    return `${h}:${m}:${s}`;
   }
 }
 
