@@ -7,20 +7,16 @@ class Logger {
   constructor() {}
 
   debug(...args: unknown[]) {
-    this.log(chalk.green.bold("DEBUG"), ...args);
-  }
-
-  info(...args: unknown[]) {
-    this.log(chalk.cyan.bold("INFO"), ...args);
+    this.print(chalk.black.bgCyan(" DEBUG "), ...args);
   }
 
   error(...args: unknown[]) {
-    this.log(chalk.red.bold("ERROR"), ...args);
+    this.print(chalk.red.bold("ERROR"), ...args);
   }
 
-  private log(level: string, ...args: unknown[]) {
+  private print(level: string, ...args: unknown[]) {
     const caller = this.getCaller();
-    const params: unknown[] = [`[${level}]`, chalk.gray(`[${this.getTime()}]`)];
+    const params: unknown[] = [`${level}`, chalk.gray(`[${this.getTime()}]`)];
 
     if (caller && caller.at) {
       params.push(chalk.gray(`[${caller.at}]`));
@@ -30,27 +26,27 @@ class Logger {
   }
 
   private getCaller() {
-    const level = 4; // Ajustar si se agregan más capas
+    const stackIndex = 4; // Ajustar si se agregan más capas
     const err = new Error();
     if (!err.stack) return null;
 
     const frames = err.stack.split("\n");
-    if (frames.length < level) return null;
+    if (frames.length < stackIndex) return null;
 
-    const match = frames[level].match(/at (.+) \((.+)\)/);
+    const match = frames[stackIndex].match(/at (.+) \((.+)\)/);
     if (!match) return null;
 
     const at = match[1];
-    const filePath = this.cleanFilePath(match[2]);
+    const file = this.cleanFile(match[2]);
 
     if (at.indexOf("<anonymous>") >= 0) {
-      return { at: null, filePath };
+      return { at: null, file };
     }
 
-    return { at, filePath };
+    return { at, file };
   }
 
-  private cleanFilePath(fileName: string): string {
+  private cleanFile(fileName: string): string {
     const cwdArray: string[] = process.cwd().split(pathSeparator);
     const filePath = Object.entries(fileName.split(pathSeparator))
       .reduce((cleanFileName: string, fileNamePart, index) => {

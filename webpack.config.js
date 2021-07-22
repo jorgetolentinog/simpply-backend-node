@@ -14,8 +14,6 @@ module.exports = {
     : "source-map",
   resolve: {
     extensions: [".ts", ".js", ".json"],
-    symlinks: false,
-    cacheWithContext: false,
     alias: {
       "@": path.resolve(__dirname, "src"),
     },
@@ -26,7 +24,6 @@ module.exports = {
     filename: "[name].js",
   },
   target: "node",
-  // externals: [nodeExternals()],
   module: {
     rules: [
       {
