@@ -23,7 +23,6 @@ class Config {
   constructor() {
     this.environment = environment.parse(process.env.NODE_ENV);
     this.airtable = airtable.parse(readEnv("AIRTABLE"));
-    console.log(this.airtable);
   }
 }
 
