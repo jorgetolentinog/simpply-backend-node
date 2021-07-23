@@ -20,7 +20,7 @@ const Query = new GraphQLObjectType({
         return await service.handle();
       },
     },
-    appointmentById: {
+    appointment: {
       type: Appointment,
       args: {
         id: {
