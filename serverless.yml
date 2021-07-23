@@ -11,6 +11,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
+  memorySize: 256
   lambdaHashingVersion: 20201221
   environment:
     STAGE: ${opt:stage, 'local'}

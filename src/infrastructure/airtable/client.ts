@@ -1,21 +1,22 @@
 import { injectable } from "tsyringe";
 import axios, { AxiosInstance } from "axios";
+import { Config } from "@/config";
 
 @injectable()
 class AirtableClient {
   http: AxiosInstance;
 
-  constructor() {
-    this.http = this.httpInstanceCreate();
+  constructor(private config: Config) {
+    this.http = this.getInstance();
   }
 
-  private httpInstanceCreate() {
+  private getInstance() {
     return axios.create({
-      baseURL: "https://api.airtable.com/v0/appgUUt9aJtuOxtnD/",
-      timeout: 3000,
+      baseURL: this.config.airtable.baseURL,
+      timeout: this.config.airtable.timeout,
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer keyMxMQ7eexdbC70J",
+        Authorization: `Bearer ${this.config.airtable.apiKey}`,
       },
     });
   }

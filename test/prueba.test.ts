@@ -14,7 +14,7 @@ describe("Ejemplo", () => {
 
     scope.registerInstance(AirtableClient, AirtableClientMock);
     const service = scope.resolve(ServiceServiceList);
-
-    console.log("service", await service.handle());
+    const result = await service.handle();
+    expect(result.length).toBe(0);
   });
 });
