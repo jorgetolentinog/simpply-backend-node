@@ -21,8 +21,10 @@ class Config {
   airtable: z.infer<typeof airtable>;
 
   constructor() {
+    console.log("process", process.env, readEnv("AIRTABLE"));
     this.environment = environment.parse(process.env.NODE_ENV);
     this.airtable = airtable.parse(readEnv("AIRTABLE"));
+    console.log(this);
   }
 }
 

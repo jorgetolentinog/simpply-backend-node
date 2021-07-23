@@ -15,6 +15,9 @@ provider:
   lambdaHashingVersion: 20201221
   environment:
     STAGE: ${opt:stage, 'local'}
+    AIRTABLE__BASE_ID: ${env:AIRTABLE__BASE_ID, 'BASE_ID'}
+    AIRTABLE__API_KEY: ${env:AIRTABLE__API_KEY, 'API_KEY'}
+    AIRTABLE__API_TIMEOUT: ${env:AIRTABLE__API_TIMEOUT, '3000'}
 
 custom:
   webpack:
