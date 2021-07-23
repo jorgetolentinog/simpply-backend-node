@@ -11,6 +11,9 @@ const Appointment = new GraphQLObjectType({
     id: {
       type: GraphQLNonNull(GraphQLID),
     },
+    serviceId: {
+      type: GraphQLNonNull(GraphQLID),
+    },
     createdTime: {
       type: GraphQLNonNull(GraphQLString),
     },

@@ -29,7 +29,7 @@ app.use(
         const issue = err.originalError.issues[0];
         const issueAt = issue.path.join(".");
         reason = "validation";
-        message = `Validation Error: ${issue.message} at ${issueAt}`;
+        message = `Validation Error: ${issue.message} in ${issueAt}`;
         stacktrace = undefined;
         detail = err.originalError.issues;
       }

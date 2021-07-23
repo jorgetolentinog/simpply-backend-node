@@ -2,16 +2,20 @@ import { injectable } from "tsyringe";
 import { AirtableClient } from "../../client";
 import { Appointment, Record, RecordDraft } from "../../schema/appointment";
 
-interface IHandleInput {
+type HandleInput = {
   serviceId: string;
   date: string;
-}
+};
+
+type HandleOutput = Promise<{
+  id: string;
+}>;
 
 @injectable()
 class AppointmentRepositoryCreate {
   constructor(private client: AirtableClient) {}
 
-  async handle(params: IHandleInput) {
+  async handle(params: HandleInput): HandleOutput {
     const body: Appointment<RecordDraft> = {
       records: [
         {
