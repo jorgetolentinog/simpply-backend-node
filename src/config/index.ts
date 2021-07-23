@@ -4,8 +4,8 @@ import { z } from "zod";
 
 enum ENVIRONMENT {
   local = "local",
-  development = "development",
-  production = "production",
+  development = "dev",
+  production = "prod",
 }
 
 const environment = z.string().default(ENVIRONMENT.local);
