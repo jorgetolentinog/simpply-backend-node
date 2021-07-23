@@ -1,16 +1,30 @@
-import { injectable } from "tsyringe";
+import { singleton } from "tsyringe";
+import { readEnv } from "read-env";
+import { z } from "zod";
 
-@injectable()
+enum ENVIRONMENT {
+  local = "local",
+  development = "development",
+  production = "production",
+}
+
+const environment = z.string().default(ENVIRONMENT.local);
+const airtable = z.object({
+  baseId: z.string().default("BASE_ID"),
+  apiKey: z.string().default("API_KEY"),
+  apiTimeout: z.number().default(3000),
+});
+
+@singleton()
 class Config {
-  serverless = {
-    isOffline: !!process.env.IS_OFFLINE,
-  };
+  environment: z.infer<typeof environment>;
+  airtable: z.infer<typeof airtable>;
 
-  airtable = {
-    baseURL: "https://api.airtable.com/v0/appgUUt9aJtuOxtnD/",
-    apiKey: "keyMxMQ7eexdbC70J",
-    timeout: 3000,
+  constructor() {
+    this.environment = environment.parse(process.env.NODE_ENV);
+    this.airtable = airtable.parse(readEnv("AIRTABLE"));
+    console.log(this.airtable);
   }
 }
 
-export { Config };
+export { Config, ENVIRONMENT };

@@ -12,8 +12,8 @@ class AirtableClient {
 
   private getInstance() {
     return axios.create({
-      baseURL: this.config.airtable.baseURL,
-      timeout: this.config.airtable.timeout,
+      baseURL: `https://api.airtable.com/v0/${this.config.airtable.baseId}/`,
+      timeout: this.config.airtable.apiTimeout,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.config.airtable.apiKey}`,
